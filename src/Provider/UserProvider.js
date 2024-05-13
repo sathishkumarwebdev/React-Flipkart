@@ -4,7 +4,7 @@
     const [userData,setUserData]=useState([]);
     return(
         <userContext.Provider value={{userData,setUserData}}>
-                {props.Children}
+                {props.children}
         </userContext.Provider>
     )
  }

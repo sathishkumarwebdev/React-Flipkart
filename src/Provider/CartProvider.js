@@ -42,6 +42,7 @@ const reducer = (cart, action) => {
   }
 };
 export function CartProvider(props) {
+  
   const [cart, dispatch] = useReducer(reducer, []);
   return (
     <cartContext.Provider value={{ cart, dispatch }}>

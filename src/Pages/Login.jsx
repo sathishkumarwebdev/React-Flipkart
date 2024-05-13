@@ -1,5 +1,7 @@
 import login_img_c4a81e from "../assets/login_img_c4a81e.png";
 import { useState } from "react";
+import {NavBar} from "../Components/NavBar";
+import {Link} from "react-router-dom"
 export function Login({ setAuthentication }) {
   //hooks
   const [userName, setUserName] = useState("");
@@ -43,6 +45,7 @@ export function Login({ setAuthentication }) {
   }
   return (
     <>
+      <NavBar />
       <div className="login-conatiner">
         <div className="login-content">
           <span>Login</span>
@@ -78,7 +81,9 @@ export function Login({ setAuthentication }) {
             </button>
           </div>
           <div className="new-acc">
-            <span>New to Flipkart? Create an account</span>
+            <Link to={"/NewLogin"}>
+              <span>New to Flipkart? Create an account</span>
+            </Link>
           </div>
         </div>
       </div>

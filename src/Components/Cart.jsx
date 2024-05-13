@@ -50,7 +50,7 @@ export function Cart({ cart ,dispatch}) {
             </div>
             <div className="cart-price">
               <span className="cart-price-strike">${price}</span>
-              <span className="rate">${value}</span>
+              <span className="cart-rate">${value}</span>
               <div className="offer">
                 <span className="cart-off">
                   {discountPercentage.toFixed(0)}%off

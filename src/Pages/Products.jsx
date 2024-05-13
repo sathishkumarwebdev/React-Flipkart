@@ -1,21 +1,24 @@
 import { NavBar } from "../Components/NavBar";
 import { List } from "../Components/List";
 import { ProductSlider } from "../Components/ProductSlider";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Card } from "../Pages/Card";
-import {Footer} from "../Components/Footer";
-
+import { Footer } from "../Components/Footer";
+import { userContext } from "../Provider/UserProvider";
 
 export function Products() {
   //hooks
   const [products, setProducts] = useState([]);
+  // const context = useContext(userContext);
+  // console.log("context ::", context);
+  // const { userData, setUserData } = context;
   const [userData, setUserData] = useState([]);
 
   //provider
- 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log(token);
     const getData = async () => {
       const response = await fetch("https://dummyjson.com/auth/me", {
         method: "GET",
@@ -26,6 +29,7 @@ export function Products() {
       const data = await response.json();
 
       setUserData(data);
+      localStorage.setItem("nameUser", data.firstName);
     };
 
     if (token) {
@@ -47,14 +51,11 @@ export function Products() {
     getProductDetails();
   }, [userData]);
 
-
-products.map((item)=>{console.log(item.category);})
   return (
     <main className="product-container">
       <NavBar />
       <List />
-      <ProductSlider/>
-      
+      <ProductSlider />
 
       <div className="card-box-conatiner">
         <div className="card-box-category">
@@ -116,9 +117,7 @@ products.map((item)=>{console.log(item.category);})
         </div>
       </div>
 
-
-      <Footer/>
+      <Footer />
     </main>
-    
   );
 }

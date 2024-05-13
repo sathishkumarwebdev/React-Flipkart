@@ -1,43 +1,41 @@
-import {Routes,Route,useNavigate} from "react-router-dom";
-import {useState,useEffect} from "react";
-import {Login} from "./Pages/Login";
-import {Products} from "./Pages/Products"
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Login } from "./Pages/Login";
+import { Products } from "./Pages/Products";
 import { ProductDetails } from "./Pages/ProductDetails";
-import {CartProvider} from "./Provider/CartProvider";
-import {YourCart} from "./Pages/YourCart";
+import { YourCart } from "./Pages/YourCart";
+import { NewLogin } from "./Pages/NewLogin";
 
-
+import { CartProvider } from "./Provider/CartProvider";
+import { UserProvider } from './Provider/UserProvider';
 function App() {
   //hooks
-  const navigate=useNavigate();
-  const [isAthuatication,setAuthentication]=useState(false);
-
+  const navigate = useNavigate();
+  const [isAthuatication, setAuthentication] = useState(false);
 
   //useeffect
-  useEffect(()=>{
-    if(isAthuatication){
-      navigate('/Products')
-     
+  useEffect(() => {
+    if (isAthuatication) {
+      navigate("/");
     }
-  },[isAthuatication])
-
-  
+  }, [isAthuatication]);
 
   return (
     <>
-      
-        <CartProvider>
+      <CartProvider>
+        <UserProvider>
           <Routes>
             <Route
-              path="/"
+              path="/Login"
               element={<Login setAuthentication={setAuthentication} />}
             ></Route>
-            <Route path="/Products" element={<Products />} />
+            <Route path="/NewLogin" element={<NewLogin />} />
+            <Route path="/" element={<Products />} />
             <Route path="/ProductDetails" element={<ProductDetails />} />
             <Route path="/YourCart" element={<YourCart />} />
           </Routes>
-        </CartProvider>
-      
+        </UserProvider>
+      </CartProvider>
     </>
   );
 }

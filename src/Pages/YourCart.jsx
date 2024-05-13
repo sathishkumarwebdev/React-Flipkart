@@ -2,25 +2,65 @@ import { NavBar } from "../Components/NavBar";
 import { cartContext } from "../Provider/CartProvider";
 import { useContext, useState } from "react";
 import { Cart } from "../Components/Cart";
+import {CartCount} from "../PreDefine/CartCount";
+import {CartPrice} from "../Components/CartPrice";
+import { IoShieldCheckmarkSharp } from "react-icons/io5";
+import {Link, useNavigate} from "react-router-dom"
 export function YourCart() {
   // const [products, setProducts] = useState([]);
   const context = useContext(cartContext);
   const { cart, dispatch } = context;
+  const navigate=useNavigate();
 
+  function hanldeShop(){
+    navigate("/");
+  }
 const qunatity=cart.reduce((acc,cart)=>acc+cart.qty,0) 
 
   return (
     <>
       <NavBar />
       {cart.length === 0 ? (
-        <div>empty Cart</div>
+        <div className="your-cart-conatiner">
+          <div className="your-cart">
+            <div className="your-cart-title">
+              <div className="your-cart-flipkart">
+                <div className="flipkart">
+                  <span>Flipkart</span>
+                </div>
+              </div>
+              <div className="your-cart-grocery">Grocery</div>
+            </div>
+            <div className="empty-cart">
+              <div>
+                <img
+                  src="https://rukminim2.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90"
+                  alt="empty-cart"
+                />
+              </div>
+              <div>
+                <div>Your cart is empty!</div>
+                <div className="small-text">Add items to it now.</div>
+              </div>
+              <div>
+                <Link to={"/"}>
+                  <button className="shop-btn">Shop Now</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="your-cart-conatiner">
           <div className="your-cart">
             <div className="your-cart-title">
               <div className="your-cart-flipkart">
                 <div className="flipkart">
-                  <span>Flipkart &#40;{qunatity}&#41;</span>
+                  <span>
+                    Flipkart &#40;
+                    <CartCount cart={cart} />
+                    &#41;
+                  </span>
                 </div>
               </div>
               <div className="your-cart-grocery">Grocery</div>
@@ -113,7 +153,23 @@ const qunatity=cart.reduce((acc,cart)=>acc+cart.qty,0)
               </div>
             </div>
           </div>
-          <div className="your-cart-total">hai</div>
+          <div className="your-cart-total-container">
+            <div className="your-cart-total">
+              <div className="cart-price-title">PRICE DETAILS</div>
+              <div className="price-container">
+                <CartPrice cart={cart} />
+              </div>
+              <div className="product-safty">
+                <div>
+                  <IoShieldCheckmarkSharp size={28} />
+                </div>
+                <div className="safty-text">
+                  Safe and Secure Payments.100% Authentic products. 100%
+                  Authentic products.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

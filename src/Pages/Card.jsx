@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import {Navigate, useNavigate} from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom";
 
 export function Card({ product }) {
-  const {
-    title,
-    price,
-    rating,
-    discountPercentage,
-    thumbnail,
-    id
-  } = product;
-const navigate=useNavigate();
- 
-  
+  const { title, price, rating, discountPercentage, thumbnail, id } = product;
+  const navigate = useNavigate();
+
   const discountValue = price * ((100 - discountPercentage) / 100);
   const value = discountValue.toFixed(2);
 
-function handleClick(){
-  navigate("/ProductDetails", { state: { product } });
-}
-
-
+  function handleClick() {
+    navigate("/ProductDetails", { state: { product } });
+  }
 
   //   const handleClick = () => {
   //     if (btn) {
