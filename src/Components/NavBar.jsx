@@ -5,25 +5,31 @@ import { FaSearch } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { cartContext } from "../Provider/CartProvider";
+import { userContext } from "../Provider/UserProvider";
 import { CartCount } from "../PreDefine/CartCount";
+import { TiArrowSortedUp } from "react-icons/ti";
 export function NavBar() {
-  const [userMouseMove,setUserMouseMove]=useState(true)
+  const [userMouseMove,setUserMouseMove]=useState(false)
   const context = useContext(cartContext);
+  const userDataContext=useContext(userContext);
   const { cart } = context;
+  const {userData}=userDataContext;
   const navigate = useNavigate();
-  const nameUser = localStorage.getItem("nameUser");
-  console.log(nameUser);
-
+  
+  
+  
+  const { firstName,lastName } = userData;
   const cartQty = cart.reduce((acc, cart) => acc + cart.qty, 0);
   function yourCart() {
     navigate("/YourCart");
   }
+  function handleMouseOver(){
+     setUserMouseMove(!userMouseMove);
+     
+    
+  } 
+ 
 
-  
-
-  function handleUserProfile(){
-    console.log("hai");
-  }
 
   return (
     <header>
@@ -47,14 +53,33 @@ export function NavBar() {
           />
           <FaSearch color="blue" size={18} />
         </div>
-        <div className="nav-item">
-          {nameUser ? (
+        <div className="username-nav-item">
+          {firstName ? (
             <div
               className="user-name"
-              onMouseOver={() => setUserMouseMove(!userMouseMove)}
+              onMouseOver={(e) => {  e.stopPropagation();
+              handleMouseOver();}
+              
+                
+                }
             >
-              {nameUser}
-              {userMouseMove ? <div className="userProfile-box">hi</div> : ""}
+              {firstName}&nbsp;{lastName}
+              {userMouseMove ? (
+                // <div className="userProfile-box">
+                //   <div className="arrow-box">
+                //     <TiArrowSortedUp/>
+                //   </div>
+                //   <div>hi</div>
+                // </div>
+                <div className="dropdown-list">
+                  <div  className="arrow"><TiArrowSortedUp size={50}/></div>
+                  <div className="profile-box">
+                    <div>user profile</div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             <div>

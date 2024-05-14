@@ -2,20 +2,25 @@ import { NavBar } from "../Components/NavBar";
 import { cartContext } from "../Provider/CartProvider";
 import { useContext, useState } from "react";
 import { Cart } from "../Components/Cart";
-import {CartCount} from "../PreDefine/CartCount";
-import {CartPrice} from "../Components/CartPrice";
+import { CartCount } from "../PreDefine/CartCount";
+import { CartPrice } from "../Components/CartPrice";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
-import {Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { userContext } from "../Provider/UserProvider";
 export function YourCart() {
   // const [products, setProducts] = useState([]);
   const context = useContext(cartContext);
+  const userDataContext = useContext(userContext);
   const { cart, dispatch } = context;
-  const navigate=useNavigate();
+  const { userData } = userDataContext;
+  const { address, firstName } = userData;
+  console.log(address);
+  const navigate = useNavigate();
 
-  function hanldeShop(){
+  function hanldeShop() {
     navigate("/");
   }
-const qunatity=cart.reduce((acc,cart)=>acc+cart.qty,0) 
+  const qunatity = cart.reduce((acc, cart) => acc + cart.qty, 0);
 
   return (
     <>
@@ -65,7 +70,22 @@ const qunatity=cart.reduce((acc,cart)=>acc+cart.qty,0)
               </div>
               <div className="your-cart-grocery">Grocery</div>
             </div>
-            <div className="your-cart-address"> hi</div>
+
+           {address?(<div className="your-cart-address">
+              <div>
+                <span>Deliver to: </span>
+                <span className="bold">{firstName},</span>
+                <span className="bold">{address.postalCode}</span>
+                <div className="address-type">HOME</div>
+              </div>
+              <div className="your-cart-address-add">
+                <span>{address.address},</span>
+
+                <span>{address.city},</span>
+                <span>{address.state}.</span>
+              </div>
+            </div>):""}
+            
             <div className="cart-items-container">
               {cart.map((cart) => (
                 <Cart cart={cart} dispatch={dispatch} key={cart.id} />

@@ -9,10 +9,10 @@ import { userContext } from "../Provider/UserProvider";
 export function Products() {
   //hooks
   const [products, setProducts] = useState([]);
-  // const context = useContext(userContext);
-  // console.log("context ::", context);
-  // const { userData, setUserData } = context;
-  const [userData, setUserData] = useState([]);
+  const context = useContext(userContext);
+  console.log("context ::", context);
+  const { userData, setUserData } = context;
+  // const [userData, setUserData] = useState([]);
 
   //provider
 
@@ -29,7 +29,7 @@ export function Products() {
       const data = await response.json();
 
       setUserData(data);
-      localStorage.setItem("nameUser", data.firstName);
+      
     };
 
     if (token) {
